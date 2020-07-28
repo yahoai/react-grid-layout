@@ -210,10 +210,12 @@ export default class ReactGridLayout extends React.Component<Props, State> {
   }
 
   componentDidUpdate(prevProps: Props, prevState: State) {
-    const newLayout = this.state.layout;
-    const oldLayout = prevState.layout;
+    if (!this.state.activeDrag) {
+      const newLayout = this.state.layout;
+      const oldLayout = prevState.layout;
 
-    this.onLayoutMaybeChanged(newLayout, oldLayout);
+      this.onLayoutMaybeChanged(newLayout, oldLayout);
+    }
   }
 
   /**
@@ -349,7 +351,10 @@ export default class ReactGridLayout extends React.Component<Props, State> {
   onLayoutMaybeChanged(newLayout: Layout, oldLayout: ?Layout) {
     if (!oldLayout) oldLayout = this.state.layout;
 
-    if (!isEqual(oldLayout, newLayout)) {
+    if (
+      !isEqual(oldLayout, newLayout) ||
+      JSON.stringify(oldLayout) !== JSON.stringify(newLayout)
+    ) {
       this.props.onLayoutChange(newLayout);
     }
   }
