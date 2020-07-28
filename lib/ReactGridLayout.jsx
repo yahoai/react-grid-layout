@@ -210,14 +210,10 @@ export default class ReactGridLayout extends React.Component<Props, State> {
   }
 
   componentDidUpdate(prevProps: Props, prevState: State) {
-    if (!this.state.activeDrag || this.state.forceUpdate) {
-      const newLayout = this.state.layout;
-      const oldLayout = prevState.layout;
+    const newLayout = this.state.layout;
+    const oldLayout = prevState.layout;
 
-      this.onLayoutMaybeChanged(newLayout, oldLayout);
-
-      this.setState({ forceUpdate: false });
-    }
+    this.onLayoutMaybeChanged(newLayout, oldLayout);
   }
 
   /**
